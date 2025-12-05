@@ -5,10 +5,27 @@ import json
 import os
 
 
-API_KEY = 'AIzaSyDYJczHihBeUxXO7pDJ64S2aBztM98Ynp4'
+# Загружаем API ключ из файла keys.env
+def load_api_key():
+    env_path = os.path.join(os.path.dirname(__file__), 'keys.env')
+    try:
+        with open(env_path, 'r') as f:
+            for line in f:
+                if line.startswith('gemini_api_key='):
+                    return line.strip().split('=', 1)[1]
+    except FileNotFoundError:
+        print("❌ Файл keys.env не найден!")
+    return None
+
+API_KEY = load_api_key()
+if API_KEY:
+    print(f"✅ API ключ загружен")
+else:
+    print("❌ API ключ не найден в keys.env!")
+    
 GEMINI_API_URL = f'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key={API_KEY}'
 
-# Загружаем ПОЛНУЮ базу знаний университета Туран (3000+ строк)
+# Загружаем ПОЛНУЮ базу знаний университета Туран
 KNOWLEDGE_BASE = ""
 knowledge_file_path = os.path.join(os.path.dirname(__file__), 'turan_university_knowledge.txt')
 try:
@@ -101,16 +118,22 @@ def ai_chat(request):
                 "contents": contents
             }
             
+            print(f"🔑 Используемый URL: {GEMINI_API_URL[:80]}...")
             response = requests.post(GEMINI_API_URL, json=payload, headers={'Content-Type': 'application/json'})
+            
+            print(f"📡 Статус ответа: {response.status_code}")
+            if response.status_code != 200:
+                print(f"❌ Ошибка API: {response.text[:500]}")
             
             if response.status_code == 200:
                 result = response.json()
                 ai_response = result['candidates'][0]['content']['parts'][0]['text']
                 return JsonResponse({'response': ai_response})
             else:
-                return JsonResponse({'response': 'Извините, произошла ошибка. Попробуйте еще раз.'}, status=500)
+                return JsonResponse({'response': f'Извините, произошла ошибка. Код: {response.status_code}'}, status=500)
                 
         except Exception as e:
+            print(f"❌ Исключение: {str(e)}")
             return JsonResponse({'response': f'Ошибка: {str(e)}'}, status=500)
     
     return JsonResponse({'error': 'Метод не поддерживается'}, status=405)

@@ -4,7 +4,7 @@ from django.views.generic import TemplateView
 import ai_brain
 
 urlpatterns = [
-    path('', TemplateView.as_view(template_name='SolarSystem.html'), name='home'),
+    path('', TemplateView.as_view(template_name='index.html'), name='home'),
     path('admin/', admin.site.urls),
     path('ai-chat/', ai_brain.ai_chat, name='ai_chat'),
 ]

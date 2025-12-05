@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Университет</title>
-    <link rel="stylesheet" href="style.css">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'style.css' %}">
 </head>
 
 <body>
@@ -84,6 +85,156 @@
         </div>
     </div>
 </section>
+
+<footer>
+    <!-- Плавающая кнопка ИИ-ассистента -->
+    <button id="aiAssistantBtn" onclick="toggleAIChat()">🤖</button>
+
+    <!-- Окно чата с ИИ -->
+    <div id="aiChatWindow">
+        <!-- Заголовок чата -->
+        <div class="chat-header">
+            <div>
+                <h3>🎓 Туран-бот</h3>
+                <p>Твой гид по университету</p>
+            </div>
+            <div class="chat-header-buttons">
+                <button onclick="clearChatHistory()" title="Очистить историю" class="chat-clear-btn">🗑️</button>
+                <button onclick="toggleAIChat()" class="chat-close-btn">×</button>
+            </div>
+        </div>
+        
+        <!-- Область сообщений -->
+        <div id="aiChatMessages">
+            <div class="welcome-message">
+                <p>Привет! 👋 Я Туран-бот — расскажу всё про универ: специальности, цены, гранты, как поступить. Спрашивай! А если представишься — будет приятнее общаться 😊</p>
+            </div>
+        </div>
+        
+        <!-- Поле ввода -->
+        <div class="chat-input-area">
+            <div class="chat-input-wrapper">
+                <input type="text" id="aiChatInput" placeholder="Задайте вопрос...">
+                <button onclick="sendAIMessage()" class="chat-send-btn">➤</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 🧠 История разговора для памяти ИИ
+        let conversationHistory = [];
+        
+        function toggleAIChat() {
+            const chatWindow = document.getElementById('aiChatWindow');
+            const btn = document.getElementById('aiAssistantBtn');
+            
+            if (chatWindow.style.display === 'none' || chatWindow.style.display === '') {
+                chatWindow.style.display = 'flex';
+                btn.style.transform = 'scale(0.9)';
+            } else {
+                chatWindow.style.display = 'none';
+                btn.style.transform = 'scale(1)';
+            }
+        }
+        
+        // Очистить историю чата
+        function clearChatHistory() {
+            conversationHistory = [];
+            const messagesDiv = document.getElementById('aiChatMessages');
+            messagesDiv.innerHTML = `
+                <div class="welcome-message">
+                    <p>Начинаем сначала! 🔄 Я Туран-бот — спрашивай что угодно про универ, помогу разобраться! 😊</p>
+                </div>
+            `;
+        }
+
+        function sendAIMessage() {
+            const input = document.getElementById('aiChatInput');
+            const messagesDiv = document.getElementById('aiChatMessages');
+            const message = input.value.trim();
+            
+            if (message) {
+                // Сообщение пользователя
+                const userMsg = document.createElement('div');
+                userMsg.className = 'user-message';
+                userMsg.innerHTML = `
+                    <div class="user-message-bubble">
+                        <p>${message}</p>
+                    </div>
+                `;
+                messagesDiv.appendChild(userMsg);
+                
+                // Добавляем в историю
+                conversationHistory.push({ role: 'user', content: message });
+                
+                input.value = '';
+                messagesDiv.scrollTop = messagesDiv.scrollHeight;
+                
+                // Показываем индикатор загрузки
+                const loadingMsg = document.createElement('div');
+                loadingMsg.id = 'loadingIndicator';
+                loadingMsg.className = 'loading-message';
+                loadingMsg.innerHTML = `
+                    <div class="bot-message">
+                        <p>⏳ Думаю...</p>
+                    </div>
+                `;
+                messagesDiv.appendChild(loadingMsg);
+                messagesDiv.scrollTop = messagesDiv.scrollHeight;
+                
+                // Ответ ИИ (отправляем с историей)
+                fetch('/ai-chat/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ 
+                        message: message,
+                        history: conversationHistory.slice(-20)
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    const loading = document.getElementById('loadingIndicator');
+                    if (loading) loading.remove();
+                    
+                    conversationHistory.push({ role: 'assistant', content: data.response });
+                    
+                    const aiMsg = document.createElement('div');
+                    aiMsg.innerHTML = `
+                        <div class="bot-message">
+                            <p>${data.response}</p>
+                        </div>
+                    `;
+                    messagesDiv.appendChild(aiMsg);
+                    messagesDiv.scrollTop = messagesDiv.scrollHeight;
+                })
+                .catch(error => {
+                    console.error('Ошибка:', error);
+                    const loading = document.getElementById('loadingIndicator');
+                    if (loading) loading.remove();
+                    
+                    const aiMsg = document.createElement('div');
+                    aiMsg.innerHTML = `
+                        <div class="bot-message">
+                            <p>😔 Извините, произошла ошибка. Попробуйте ещё раз.</p>
+                        </div>
+                    `;
+                    messagesDiv.appendChild(aiMsg);
+                    messagesDiv.scrollTop = messagesDiv.scrollHeight;
+                });
+            }
+        }
+
+        // Отправка по Enter
+        document.getElementById('aiChatInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendAIMessage();
+            }
+        });
+    </script>
+</footer>
+
 
 </body>
 </html>
