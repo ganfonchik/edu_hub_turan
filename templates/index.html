@@ -1,0 +1,221 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Edu Hub — Pair Your Future{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'css/pages/home.css' %}">
+<link rel="stylesheet" href="{% static 'css/components/chat.css' %}">
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero">
+    <div class="hero-badge">Бесплатная профориентация с ИИ</div>
+    <h1>Не знаешь кем стать?<br><span>Мы поможем найти призвание!</span></h1>
+    <p>Пройди тест с нашим ИИ-помощником, узнай свои сильные стороны и получи список подходящих профессий и университетов Казахстана</p>
+    <div class="hero-buttons">
+        <a href="/test/" class="btn btn-primary btn-large">Пройти тест бесплатно</a>
+        <button class="btn btn-secondary btn-large" onclick="document.getElementById('how').scrollIntoView({behavior: 'smooth'})">Узнать больше</button>
+    </div>
+</section>
+
+<!-- Stats Section -->
+<section class="stats-section">
+    <div class="stat-item">
+        <div class="stat-number">50+</div>
+        <div class="stat-label">Университетов</div>
+    </div>
+    <div class="stat-item">
+        <div class="stat-number">200+</div>
+        <div class="stat-label">Профессий</div>
+    </div>
+    <div class="stat-item">
+        <div class="stat-number">10K+</div>
+        <div class="stat-label">Прошли тест</div>
+    </div>
+    <div class="stat-item">
+        <div class="stat-number">95%</div>
+        <div class="stat-label">Довольны результатом</div>
+    </div>
+</section>
+
+<!-- How it Works Section -->
+<section class="features-section" id="how">
+    <h2>Как это работает?</h2>
+    <div class="features-grid">
+        <div class="feature-card">
+            <div class="feature-icon">💬</div>
+            <h3>1. Поговори с ИИ</h3>
+            <p>Наш умный помощник задаст тебе вопросы о твоих интересах, хобби и предпочтениях</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">🧠</div>
+            <h3>2. Анализ профиля</h3>
+            <p>ИИ проанализирует твои ответы и определит подходящие направления</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">🎯</div>
+            <h3>3. Профессии</h3>
+            <p>Получи список профессий, которые подходят именно тебе</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">🏫</div>
+            <h3>4. Университеты</h3>
+            <p>Узнай, в каких вузах Казахстана можно получить нужную специальность</p>
+        </div>
+    </div>
+</section>
+
+<!-- Directions Section -->
+<section class="features-section" id="directions">
+    <h2>Популярные направления</h2>
+    <div class="features-grid">
+        <div class="feature-card" onclick="toggleAIChat()">
+            <div class="feature-icon">💻</div>
+            <h3>IT и Программирование</h3>
+            <p>Разработка, Data Science, кибербезопасность</p>
+        </div>
+        <div class="feature-card" onclick="toggleAIChat()">
+            <div class="feature-icon">💼</div>
+            <h3>Бизнес и Экономика</h3>
+            <p>Менеджмент, маркетинг, финансы</p>
+        </div>
+        <div class="feature-card" onclick="toggleAIChat()">
+            <div class="feature-icon">⚖️</div>
+            <h3>Право</h3>
+            <p>Юриспруденция, международное право</p>
+        </div>
+        <div class="feature-card" onclick="toggleAIChat()">
+            <div class="feature-icon">🏥</div>
+            <h3>Медицина</h3>
+            <p>Врачи, фармацевты, медсёстры</p>
+        </div>
+        <div class="feature-card" onclick="toggleAIChat()">
+            <div class="feature-icon">🎨</div>
+            <h3>Дизайн и Искусство</h3>
+            <p>Графика, UI/UX, архитектура</p>
+        </div>
+        <div class="feature-card" onclick="toggleAIChat()">
+            <div class="feature-icon">🔧</div>
+            <h3>Инженерия</h3>
+            <p>Строительство, энергетика, машиностроение</p>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta-section">
+    <div class="cta-box">
+        <h2>Готов узнать своё призвание?</h2>
+        <p>Бесплатный тест займёт всего 10-15 минут</p>
+        <a href="/test/" class="btn btn-primary btn-large">Начать прямо сейчас</a>
+    </div>
+</section>
+
+<!-- AI Chat Widget -->
+<button id="aiAssistantBtn" onclick="toggleAIChat()" class="chat-toggle-btn">🤖</button>
+
+<div id="aiChatWindow" class="chat-window">
+    <div class="chat-header">
+        <div>
+            <h3>Edu Hub AI</h3>
+            <p>Твой карьерный консультант</p>
+        </div>
+        <div class="chat-header-buttons">
+            <button onclick="clearChatHistory()" title="Начать заново" class="chat-clear-btn">🔄</button>
+            <button onclick="toggleAIChat()" class="chat-close-btn">×</button>
+        </div>
+    </div>
+    
+    <div id="aiChatMessages" class="chat-messages">
+        <div class="welcome-message">
+            <p>Привет! 👋 Я твой карьерный консультант Edu Hub AI. Помогу определить, какая профессия тебе подходит, и подскажу, где учиться в Казахстане!<br><br>Расскажи немного о себе: чем любишь заниматься? Какие предметы в школе нравятся?</p>
+        </div>
+    </div>
+    
+    <div class="chat-input-area">
+        <div class="chat-input-wrapper">
+            <input type="text" id="aiChatInput" placeholder="Напиши о своих интересах..." class="chat-input">
+            <button onclick="sendAIMessage()" class="chat-send-btn">➤</button>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    let conversationHistory = [];
+    
+    function toggleAIChat() {
+        const chatWindow = document.getElementById('aiChatWindow');
+        const btn = document.getElementById('aiAssistantBtn');
+        
+        if (chatWindow.style.display === 'none' || chatWindow.style.display === '') {
+            chatWindow.style.display = 'flex';
+            btn.style.transform = 'scale(0.9)';
+        } else {
+            chatWindow.style.display = 'none';
+            btn.style.transform = 'scale(1)';
+        }
+    }
+    
+    function clearChatHistory() {
+        conversationHistory = [];
+        document.getElementById('aiChatMessages').innerHTML = `
+            <div class="welcome-message">
+                <p>Начинаем заново! Расскажи о себе: что тебе интересно? Какие предметы нравятся? Чем любишь заниматься в свободное время?</p>
+            </div>
+        `;
+    }
+
+    function sendAIMessage() {
+        const input = document.getElementById('aiChatInput');
+        const messagesDiv = document.getElementById('aiChatMessages');
+        const message = input.value.trim();
+        
+        if (message) {
+            const userMsg = document.createElement('div');
+            userMsg.className = 'user-message';
+            userMsg.innerHTML = `<div class="user-message-bubble"><p>${message}</p></div>`;
+            messagesDiv.appendChild(userMsg);
+            
+            conversationHistory.push({ role: 'user', content: message });
+            input.value = '';
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+            
+            const loadingMsg = document.createElement('div');
+            loadingMsg.id = 'loadingIndicator';
+            loadingMsg.innerHTML = `<div class="bot-message"><p>🤔 Анализирую...</p></div>`;
+            messagesDiv.appendChild(loadingMsg);
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+            
+            fetch('/ai-chat/', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ message: message, history: conversationHistory.slice(-20) })
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('loadingIndicator')?.remove();
+                conversationHistory.push({ role: 'assistant', content: data.response });
+                
+                const aiMsg = document.createElement('div');
+                aiMsg.innerHTML = `<div class="bot-message"><p>${data.response}</p></div>`;
+                messagesDiv.appendChild(aiMsg);
+                messagesDiv.scrollTop = messagesDiv.scrollHeight;
+            })
+            .catch(error => {
+                document.getElementById('loadingIndicator')?.remove();
+                const aiMsg = document.createElement('div');
+                aiMsg.innerHTML = `<div class="bot-message"><p>😔 Ошибка соединения. Попробуй ещё раз!</p></div>`;
+                messagesDiv.appendChild(aiMsg);
+            });
+        }
+    }
+
+    document.getElementById('aiChatInput').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') sendAIMessage();
+    });
+</script>
+{% endblock %}

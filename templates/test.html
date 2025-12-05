@@ -1,0 +1,437 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тест профориентации | Edu Hub</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <link rel="stylesheet" href="{% static 'css/pages/test.css' %}">
+</head>
+<body>
+    <div class="test-container">
+        <a href="/" class="back-home">
+            <svg width="20" height="20" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd"/>
+            </svg>
+            Вернуться на главную
+        </a>
+
+        <div class="test-header">
+            <h1>🎯 Тест профориентации</h1>
+            <p>Глубокий анализ твоей личности для подбора идеальной профессии. Отвечай честно — это для тебя!</p>
+        </div>
+
+        <!-- Progress -->
+        <div class="progress-container" id="progressContainer" style="display: none;">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+        <div class="progress-text" id="progressText" style="display: none;">Вопрос 1 из 10</div>
+
+        <!-- Intro Screen -->
+        <div class="question-card active" id="introScreen">
+            <div class="intro-screen">
+                <div class="emoji-big">🧠</div>
+                <h2>Готов узнать свою идеальную профессию?</h2>
+                <p>Этот тест — не обычный опросник. Мы исследуем твой способ мышления, ценности и природные склонности.</p>
+                
+                <div class="intro-features">
+                    <div class="intro-feature">
+                        <div class="icon">⏱️</div>
+                        <h4>10-15 минут</h4>
+                        <p>Не торопись, обдумай каждый ответ</p>
+                    </div>
+                    <div class="intro-feature">
+                        <div class="icon">🎭</div>
+                        <h4>Честность</h4>
+                        <p>Отвечай как есть, не пытайся выглядеть лучше</p>
+                    </div>
+                    <div class="intro-feature">
+                        <div class="icon">🤖</div>
+                        <h4>AI-анализ</h4>
+                        <p>Нейросеть проанализирует твой профиль</p>
+                    </div>
+                </div>
+
+                <button class="start-btn" onclick="startTest()">Начать тест →</button>
+            </div>
+        </div>
+
+        <!-- Questions will be rendered here -->
+        <div id="questionsContainer"></div>
+
+        <!-- Results Screen -->
+        <div class="results-screen" id="resultsScreen">
+            <div class="loading-analysis" id="loadingAnalysis">
+                <div class="loading-spinner"></div>
+                <h3>🧠 Анализирую твои ответы...</h3>
+                <p>Edu Hub AI изучает твой профиль и подбирает профессии</p>
+            </div>
+
+            <div class="analysis-result" id="analysisResult">
+                <div class="result-header">
+                    <div class="big-emoji">🎯</div>
+                    <h2>Твой профессиональный профиль</h2>
+                </div>
+                <div class="ai-response" id="aiResponse"></div>
+                <button class="retry-btn" onclick="location.reload()">🔄 Пройти тест заново</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Questions data
+        const questions = [
+            // БЛОК 1: Информационный метаболизм
+            {
+                id: 1,
+                block: "Блок 1: Твой способ познания мира",
+                title: "Что тебя зацепило в интернете за последний год?",
+                description: "Вспомни, когда искал что-то не для учебы/работы, а потому что реально заинтересовало. О чём это было?",
+                type: "open",
+                placeholder: "Например: как работают чёрные дыры, почему люди верят в теории заговора, история создания любимой игры..."
+            },
+            {
+                id: 2,
+                block: "Блок 1: Твой способ познания мира",
+                title: "Что тебе интереснее изучать?",
+                description: "Когда узнаёшь что-то новое, на что обращаешь внимание в первую очередь?",
+                type: "single",
+                options: [
+                    { icon: "⚙️", text: "КАК это работает — механика, технологии, код, биология, физика процессов" },
+                    { icon: "🧠", text: "ПОЧЕМУ люди так поступают — психология, мотивы, политика, маркетинг" },
+                    { icon: "🔀", text: "Зависит от темы — и то, и другое может зацепить" }
+                ]
+            },
+            {
+                id: 3,
+                block: "Блок 1: Твой способ познания мира",
+                title: "Детали или большая картина?",
+                description: "Как ты обычно изучаешь новую тему?",
+                type: "single",
+                options: [
+                    { icon: "🔍", text: "Копаюсь в деталях и цифрах — сравниваю характеристики, изучаю статистику, люблю точные данные" },
+                    { icon: "🌌", text: "Ищу общую картину и смыслы — тренды, теории, философия, как всё связано" },
+                    { icon: "⚖️", text: "Сначала общая картина, потом погружаюсь в важные детали" }
+                ]
+            },
+
+            // БЛОК 2: Операционная деятельность
+            {
+                id: 4,
+                block: "Блок 2: Твой стиль работы",
+                title: "Какую часть проекта оставишь себе?",
+                description: "Представь, что организуешь большой фестиваль или запускаешь стартап. Что бы ты взял на себя, а что с ужасом отдал бы другим?",
+                type: "multi",
+                maxSelect: 2,
+                options: [
+                    { icon: "💡", text: "Придумывать идеи и стратегию — креатив и планирование" },
+                    { icon: "📊", text: "Считать бюджет, искать ресурсы — аналитика и администрирование" },
+                    { icon: "🤝", text: "Переговоры, продажи, презентации — общение с людьми" },
+                    { icon: "🔨", text: "Делать руками: писать код, тексты, создавать контент — ремесло" },
+                    { icon: "🔎", text: "Проверять качество, искать ошибки — аудит и тестирование" },
+                    { icon: "👑", text: "Управлять командой, распределять задачи — лидерство" }
+                ]
+            },
+            {
+                id: 5,
+                block: "Блок 2: Твой стиль работы",
+                title: "Когда ты в состоянии потока?",
+                description: "При какой деятельности время летит незаметно и ты забываешь обо всём?",
+                type: "open",
+                placeholder: "Опиши, чем ты занимаешься, когда полностью погружён в процесс..."
+            },
+
+            // БЛОК 3: Анти-ресурс
+            {
+                id: 6,
+                block: "Блок 3: Что тебя выматывает",
+                title: "Что вызывает отторжение?",
+                description: "Выбери 1-2 вещи, которые вызывают у тебя физическое отторжение, злость или мгновенную усталость:",
+                type: "multi",
+                maxSelect: 2,
+                options: [
+                    { icon: "🌀", text: "Хаос и неопределённость — нет чётких инструкций, всё меняется каждый день" },
+                    { icon: "📋", text: "Монотонность и рутина — каждый день одно и то же, нужна внимательность к деталям" },
+                    { icon: "💔", text: "Эмоциональная нагрузка — постоянно сопереживать, выслушивать жалобы, уговаривать" },
+                    { icon: "⚠️", text: "Высокая ответственность — ошибка стоит очень дорого, все смотрят на тебя" },
+                    { icon: "🖥️", text: "Одиночество — 8 часов перед монитором без общения с людьми" },
+                    { icon: "🏃", text: "Физическая активность — много двигаться, стоять на ногах весь день" }
+                ]
+            },
+            {
+                id: 7,
+                block: "Блок 3: Что тебя выматывает",
+                title: "Объясни свой выбор",
+                description: "Почему именно эти вещи тебя выматывают? Был ли опыт, который это подтвердил?",
+                type: "open",
+                placeholder: "Расскажи подробнее, почему это для тебя невыносимо..."
+            },
+
+            // БЛОК 4: Дофаминовый триггер
+            {
+                id: 8,
+                block: "Блок 4: Что приносит удовлетворение",
+                title: "От чего ты чувствуешь «Я молодец!»?",
+                description: "Ты закончил работу. Что должно произойти, чтобы почувствовать кайф?",
+                type: "single",
+                options: [
+                    { icon: "🏗️", text: "Материальный результат — вижу то, что создал: код работает, статья написана, вещь готова" },
+                    { icon: "🏆", text: "Влияние и победа — убедил людей, победил конкурентов, моя команда лучшая" },
+                    { icon: "🙏", text: "Помощь и благодарность — человек улыбнулся, сказал спасибо, я облегчил чью-то жизнь" },
+                    { icon: "💡", text: "Инсайт и открытие — понял как это устроено, нашёл решение сложной задачи" },
+                    { icon: "🎨", text: "Самовыражение — создал что-то красивое/уникальное, выразил себя" }
+                ]
+            },
+
+            // БЛОК 5: Тест на апокалипсис
+            {
+                id: 9,
+                block: "Блок 5: Твоя природная роль",
+                title: "Кем бы ты стал в общине без технологий?",
+                description: "Цивилизация откатилась на 100 лет. Интернета нет, офисов нет. Есть община людей. Какую роль займёшь?",
+                type: "single",
+                options: [
+                    { icon: "📚", text: "Учитель/Мудрец — хранить и передавать знания" },
+                    { icon: "🔧", text: "Инженер/Строитель — создавать инструменты, чинить механизмы" },
+                    { icon: "🤝", text: "Торговец/Переговорщик — договариваться, обменивать ресурсы" },
+                    { icon: "👑", text: "Лидер/Вождь — принимать сложные решения, судить споры" },
+                    { icon: "💊", text: "Целитель — лечить людей, заботиться о здоровье" },
+                    { icon: "🗺️", text: "Разведчик/Исследователь — искать новые земли и ресурсы" },
+                    { icon: "🎭", text: "Артист/Летописец — поднимать дух, сохранять истории" }
+                ]
+            },
+
+            // Дополнительный вопрос
+            {
+                id: 10,
+                block: "Финальный блок",
+                title: "Что ещё важно знать о тебе?",
+                description: "Расскажи о своих навыках, хобби, мечтах или сомнениях. Что бы ты хотел, чтобы AI учёл при анализе?",
+                type: "open",
+                placeholder: "Любая информация, которая поможет лучше понять тебя: увлечения, сильные стороны, страхи, мечты..."
+            }
+        ];
+
+        let currentQuestion = 0;
+        let answers = {};
+
+        function startTest() {
+            document.getElementById('introScreen').classList.remove('active');
+            document.getElementById('progressContainer').style.display = 'block';
+            document.getElementById('progressText').style.display = 'block';
+            renderQuestions();
+            showQuestion(0);
+        }
+
+        function renderQuestions() {
+            const container = document.getElementById('questionsContainer');
+            container.innerHTML = '';
+
+            questions.forEach((q, index) => {
+                const card = document.createElement('div');
+                card.className = 'question-card';
+                card.id = `question-${index}`;
+
+                let inputHtml = '';
+
+                if (q.type === 'open') {
+                    inputHtml = `
+                        <textarea class="open-answer" 
+                                  id="answer-${q.id}" 
+                                  placeholder="${q.placeholder}"
+                                  oninput="saveOpenAnswer(${q.id}, this.value)"></textarea>
+                    `;
+                } else if (q.type === 'single') {
+                    inputHtml = `<div class="options-container">`;
+                    q.options.forEach((opt, optIndex) => {
+                        inputHtml += `
+                            <button class="option-btn" onclick="selectSingle(${q.id}, ${optIndex}, this)">
+                                <span class="option-icon">${opt.icon}</span>
+                                ${opt.text}
+                            </button>
+                        `;
+                    });
+                    inputHtml += `</div>`;
+                } else if (q.type === 'multi') {
+                    inputHtml = `
+                        <p class="multi-select-info">Выбери ${q.maxSelect} варианта</p>
+                        <div class="options-container">
+                    `;
+                    q.options.forEach((opt, optIndex) => {
+                        inputHtml += `
+                            <button class="option-btn" onclick="selectMulti(${q.id}, ${optIndex}, ${q.maxSelect}, this)">
+                                <span class="option-icon">${opt.icon}</span>
+                                ${opt.text}
+                            </button>
+                        `;
+                    });
+                    inputHtml += `</div>`;
+                }
+
+                card.innerHTML = `
+                    <span class="block-badge">${q.block}</span>
+                    <h2 class="question-title">${q.title}</h2>
+                    <p class="question-description">${q.description}</p>
+                    ${inputHtml}
+                    <div class="nav-buttons">
+                        <button class="nav-btn back" onclick="prevQuestion()" ${index === 0 ? 'style="visibility:hidden"' : ''}>
+                            ← Назад
+                        </button>
+                        <button class="nav-btn next" id="next-${index}" onclick="nextQuestion()">
+                            ${index === questions.length - 1 ? 'Получить результат →' : 'Далее →'}
+                        </button>
+                    </div>
+                `;
+
+                container.appendChild(card);
+            });
+        }
+
+        function showQuestion(index) {
+            document.querySelectorAll('.question-card').forEach(card => {
+                card.classList.remove('active');
+            });
+            document.getElementById(`question-${index}`).classList.add('active');
+            
+            // Update progress
+            const progress = ((index + 1) / questions.length) * 100;
+            document.getElementById('progressBar').style.width = `${progress}%`;
+            document.getElementById('progressText').textContent = `Вопрос ${index + 1} из ${questions.length}`;
+            
+            currentQuestion = index;
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function saveOpenAnswer(questionId, value) {
+            answers[questionId] = value;
+        }
+
+        function selectSingle(questionId, optionIndex, btn) {
+            const container = btn.parentElement;
+            container.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+            btn.classList.add('selected');
+            answers[questionId] = questions.find(q => q.id === questionId).options[optionIndex].text;
+        }
+
+        function selectMulti(questionId, optionIndex, maxSelect, btn) {
+            const container = btn.parentElement;
+            const selected = container.querySelectorAll('.option-btn.selected');
+            
+            if (btn.classList.contains('selected')) {
+                btn.classList.remove('selected');
+            } else if (selected.length < maxSelect) {
+                btn.classList.add('selected');
+            } else {
+                selected[0].classList.remove('selected');
+                btn.classList.add('selected');
+            }
+
+            const selectedBtns = container.querySelectorAll('.option-btn.selected');
+            const question = questions.find(q => q.id === questionId);
+            answers[questionId] = Array.from(selectedBtns).map(b => {
+                const index = Array.from(container.children).indexOf(b);
+                return question.options[index].text;
+            });
+        }
+
+        function nextQuestion() {
+            if (currentQuestion < questions.length - 1) {
+                showQuestion(currentQuestion + 1);
+            } else {
+                submitTest();
+            }
+        }
+
+        function prevQuestion() {
+            if (currentQuestion > 0) {
+                showQuestion(currentQuestion - 1);
+            }
+        }
+
+        async function submitTest() {
+            document.getElementById('progressContainer').style.display = 'none';
+            document.getElementById('progressText').style.display = 'none';
+            document.getElementById('questionsContainer').style.display = 'none';
+            document.getElementById('resultsScreen').classList.add('active');
+
+            let analysisPrompt = `Проанализируй результаты теста профориентации и дай детальные рекомендации по профессиям.
+
+ОТВЕТЫ ПОЛЬЗОВАТЕЛЯ:
+
+`;
+            questions.forEach(q => {
+                const answer = answers[q.id];
+                if (answer) {
+                    analysisPrompt += `**${q.title}**\n`;
+                    if (Array.isArray(answer)) {
+                        analysisPrompt += answer.join(', ') + '\n\n';
+                    } else {
+                        analysisPrompt += answer + '\n\n';
+                    }
+                }
+            });
+
+            analysisPrompt += `
+---
+На основе этих ответов:
+
+1. **ПСИХОЛОГИЧЕСКИЙ ПРОФИЛЬ** — кратко опиши тип личности человека (2-3 предложения)
+
+2. **ТОП-3 ИДЕАЛЬНЫЕ ПРОФЕССИИ** — для каждой укажи:
+   - Название профессии
+   - Почему подходит (на основе ответов)
+   - Зарплата в Казахстане (от-до)
+   - Где учиться (конкретные вузы Казахстана)
+
+3. **ПРОФЕССИИ, КОТОРЫХ СТОИТ ИЗБЕГАТЬ** — 2-3 профессии, которые будут выматывать
+
+4. **СОВЕТ НА БУДУЩЕЕ** — одно напутствие
+
+Формат ответа: структурированный, с эмодзи, легко читаемый.`;
+
+            try {
+                const response = await fetch('/ai-chat/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        message: analysisPrompt,
+                        history: []
+                    })
+                });
+
+                const data = await response.json();
+                
+                document.getElementById('loadingAnalysis').style.display = 'none';
+                document.getElementById('analysisResult').classList.add('show');
+                document.getElementById('aiResponse').innerHTML = formatResponse(data.response);
+
+            } catch (error) {
+                document.getElementById('loadingAnalysis').innerHTML = `
+                    <h3>😕 Упс, что-то пошло не так</h3>
+                    <p>Попробуй ещё раз</p>
+                    <button class="retry-btn" onclick="location.reload()">🔄 Начать заново</button>
+                `;
+            }
+        }
+
+        function formatResponse(text) {
+            return text
+                .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                .replace(/\n/g, '<br>')
+                .replace(/---/g, '<hr style="border-color: rgba(255,255,255,0.1); margin: 20px 0;">')
+                .replace(/#{3}\s?(.*?)(?=<br>|$)/g, '<h4>$1</h4>')
+                .replace(/#{2}\s?(.*?)(?=<br>|$)/g, '<h3>$1</h3>');
+        }
+    </script>
+</body>
+</html>

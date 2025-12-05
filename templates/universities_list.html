@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Университеты Казахстана | Edu Hub{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'css/pages/universities-list.css' %}">
+{% endblock %}
+
+{% block content %}
+<!-- Header -->
+<header class="page-header">
+    <div class="section-label">Образование</div>
+    <h1>Университеты <span>Казахстана</span></h1>
+    <p>Выбери свой будущий вуз. Мы собрали лучшие университеты страны с подробной информацией.</p>
+</header>
+
+<!-- Filters -->
+<div class="filters">
+    <button class="filter-btn active" data-filter="all">Все</button>
+    <button class="filter-btn" data-filter="national">Национальные</button>
+    <button class="filter-btn" data-filter="private">Частные</button>
+    <button class="filter-btn" data-filter="autonomous">Автономные</button>
+    <button class="filter-btn" data-filter="almaty">Алматы</button>
+    <button class="filter-btn" data-filter="astana">Астана</button>
+</div>
+
+<!-- Universities Grid -->
+<div class="universities-container">
+    <div class="universities-grid">
+        {% for uni in universities %}
+        <a href="/university/{{ uni.slug }}/" class="uni-card" data-type="{{ uni.filter_type }}" data-city="{{ uni.city_filter }}">
+            <div class="uni-card-image">
+                <span>Фото</span>
+            </div>
+            <div class="uni-card-body">
+                <div class="uni-type">{{ uni.type }}</div>
+                <h3>{{ uni.name }}</h3>
+                <p>{{ uni.tagline|truncatewords:12 }}</p>
+                <div class="uni-meta">
+                    <span>{{ uni.city }}</span>
+                    <span>{{ uni.students }} студентов</span>
+                </div>
+                <div class="uni-price">от {{ uni.price_from }} тг/год</div>
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- CTA Banner -->
+<section class="cta-section">
+    <div class="cta-box">
+        <h2>Не знаешь какой вуз выбрать?</h2>
+        <p>Пройди тест профориентации и узнай, какой университет подходит именно тебе</p>
+        <a href="/test/" class="btn btn-primary btn-large">Пройти тест профориентации</a>
+    </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Filter functionality
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            
+            const filter = this.dataset.filter;
+            const cards = document.querySelectorAll('.uni-card');
+            
+            cards.forEach(card => {
+                if (filter === 'all') {
+                    card.style.display = 'flex';
+                } else if (filter === 'almaty' || filter === 'astana' || filter === 'kaskelen') {
+                    card.style.display = card.dataset.city === filter ? 'flex' : 'none';
+                } else {
+                    card.style.display = card.dataset.type.includes(filter) ? 'flex' : 'none';
+                }
+            });
+        });
+    });
+</script>
+{% endblock %}
