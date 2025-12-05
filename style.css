@@ -150,6 +150,8 @@ body {
     border-radius: var(--radius);
     margin: 20px;
     box-shadow: var(--shadow);
+    height: 400px;
+    background-image: url(i.jpg);
 }
 
 .hero .btn {
