@@ -184,18 +184,6 @@ body {
     background: #D35400;
 }
 
-.glav{
-    font-size: 50px;
-    background-color: #D35400;
-    color: white;
-    padding: 20px;
-    border-radius: 15px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    margin: 20px 0;
-    display: inline-block;
-    
-}
-
 /* CAROUSEL + SIDEBAR */
 .carousel-section {
     display: flex;
@@ -277,8 +265,6 @@ body {
     color: var(--primary);
     margin-bottom: 10px;
 }
-
-
 
 /* PROGRAMS */
 .programs {
@@ -468,6 +454,96 @@ body {
 .chat-send-btn:hover {
     background: var(--primary-light);
 }
+
+/* PARTNERS SECTION - Анимированная карусель */
+.partners-section {
+    margin: 60px 20px;
+    overflow: hidden;
+}
+
+.partners-section h2 {
+    text-align: center;
+    color: var(--primary);
+    margin-bottom: 8px;
+}
+
+.partners-subtitle {
+    text-align: center;
+    color: var(--text-muted);
+    margin-bottom: 40px;
+    font-size: 1rem;
+}
+
+.partners-carousel {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    padding: 20px 0;
+    background: linear-gradient(90deg, var(--bg-light) 0%, transparent 10%, transparent 90%, var(--bg-light) 100%);
+}
+
+.partners-track {
+    display: flex;
+    gap: 30px;
+    animation: scroll-partners 30s linear infinite;
+    width: fit-content;
+}
+
+.partners-track:hover {
+    animation-play-state: paused;
+}
+
+@keyframes scroll-partners {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+.partner-card {
+    background: var(--bg-card);
+    padding: 30px;
+    border-radius: 16px;
+    min-width: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    box-shadow: var(--shadow);
+    transition: transform 0.3s, box-shadow 0.3s;
+    flex-shrink: 0;
+}
+
+.partner-card:hover {
+    transform: translateY(-8px) scale(1.05);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+}
+
+.partner-logo {
+    font-size: 48px;
+    width: 80px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg-sidebar);
+    border-radius: 50%;
+    transition: transform 0.3s;
+}
+
+.partner-card:hover .partner-logo {
+    transform: rotate(360deg);
+}
+
+.partner-card h4 {
+    margin: 0;
+    color: var(--primary);
+    font-size: 1rem;
+    text-align: center;
+}
+
 
 /* адапт для телефона*/
 @media (max-width: 768px) {
