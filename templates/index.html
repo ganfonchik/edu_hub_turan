@@ -77,6 +77,43 @@
     </div>
 </section>
 
+<!-- Profession Search Section -->
+<section class="search-section" id="search">
+    <div class="search-container">
+        <div class="search-header">
+            <div class="section-label">Поиск университета</div>
+            <h2>Уже знаешь кем хочешь стать?</h2>
+            <p>Введи профессию и мы покажем лучшие университеты Казахстана для твоей специальности</p>
+        </div>
+        
+        <div class="search-box">
+            <div class="search-input-wrapper">
+                <span class="search-icon">🔍</span>
+                <input type="text" id="professionSearch" placeholder="Например: программист, юрист, врач..." autocomplete="off">
+                <button id="searchBtn" class="search-btn">Найти</button>
+            </div>
+        </div>
+        
+        <div class="popular-searches">
+            <span>Популярное:</span>
+            <button class="popular-tag" data-query="программист">💻 Программист</button>
+            <button class="popular-tag" data-query="юрист">⚖️ Юрист</button>
+            <button class="popular-tag" data-query="экономист">📊 Экономист</button>
+            <button class="popular-tag" data-query="дизайнер">🎨 Дизайнер</button>
+            <button class="popular-tag" data-query="менеджер">💼 Менеджер</button>
+            <button class="popular-tag" data-query="инженер">🔧 Инженер</button>
+        </div>
+        
+        <!-- Search Results -->
+        <div id="searchResults" class="search-results" style="display: none;">
+            <h3>Рекомендуемые университеты:</h3>
+            <div id="resultsGrid" class="results-grid">
+                <!-- Results will be inserted here -->
+            </div>
+        </div>
+    </div>
+</section>
+
 <!-- CTA Section -->
 <section class="cta-section">
     <div class="cta-content">
@@ -189,6 +226,102 @@
 
     document.getElementById('aiChatInput').addEventListener('keypress', function(e) {
         if (e.key === 'Enter') sendAIMessage();
+    });
+
+    // ============ PROFESSION SEARCH (AI-powered) ============
+    
+    function searchProfession(query) {
+        const q = query.trim();
+        const resultsDiv = document.getElementById('searchResults');
+        const resultsGrid = document.getElementById('resultsGrid');
+        const searchBtn = document.getElementById('searchBtn');
+        
+        if (!q) {
+            resultsDiv.style.display = 'none';
+            return;
+        }
+        
+        // Show loading state
+        searchBtn.disabled = true;
+        searchBtn.textContent = '🔄';
+        resultsGrid.innerHTML = `
+            <div class="search-loading">
+                <p>🤖 ИИ подбирает лучшие университеты для профессии "${q}"...</p>
+            </div>
+        `;
+        resultsDiv.style.display = 'block';
+        
+        // Call AI API
+        fetch('/search-university/', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ profession: q })
+        })
+        .then(response => response.json())
+        .then(data => {
+            searchBtn.disabled = false;
+            searchBtn.textContent = 'Найти';
+            
+            if (data.universities && data.universities.length > 0) {
+                let html = '';
+                
+                // Show profession info
+                if (data.profession_name) {
+                    html += `<div class="profession-info">
+                        <h4>🎯 ${data.profession_name}</h4>
+                        ${data.description ? `<p>${data.description}</p>` : ''}
+                    </div>`;
+                }
+                
+                // Show universities
+                html += data.universities.map(uni => `
+                    <a href="/university/${uni.slug}/" class="result-card">
+                        <div class="result-match">${uni.match}% совпадение</div>
+                        <h4>${uni.name}</h4>
+                        <p>${uni.faculty}</p>
+                        ${uni.why ? `<p class="result-why">${uni.why}</p>` : ''}
+                        <span class="result-link">Подробнее →</span>
+                    </a>
+                `).join('');
+                
+                resultsGrid.innerHTML = html;
+            } else {
+                resultsGrid.innerHTML = `
+                    <div class="no-results">
+                        <p>🤔 Не нашли подходящий вуз для этой профессии</p>
+                        <p>Попробуй <a href="#" onclick="toggleAIChat(); return false;">поговорить с ИИ-консультантом</a> — он поможет подобрать!</p>
+                    </div>
+                `;
+            }
+        })
+        .catch(error => {
+            searchBtn.disabled = false;
+            searchBtn.textContent = 'Найти';
+            resultsGrid.innerHTML = `
+                <div class="no-results">
+                    <p>😔 Ошибка поиска. Попробуй ещё раз!</p>
+                </div>
+            `;
+        });
+    }
+    
+    // Search button click
+    document.getElementById('searchBtn').addEventListener('click', function() {
+        searchProfession(document.getElementById('professionSearch').value);
+    });
+    
+    // Enter key in search
+    document.getElementById('professionSearch').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') searchProfession(this.value);
+    });
+    
+    // Popular tags click
+    document.querySelectorAll('.popular-tag').forEach(tag => {
+        tag.addEventListener('click', function() {
+            const query = this.dataset.query;
+            document.getElementById('professionSearch').value = query;
+            searchProfession(query);
+        });
     });
 </script>
 {% endblock %}

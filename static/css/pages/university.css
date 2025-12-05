@@ -315,6 +315,21 @@
     margin-bottom: 16px;
 }
 
+/* Faculty content switching */
+.faculty-content {
+    display: none;
+}
+
+.faculty-content.active {
+    display: block;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
 .service-content h3 {
     font-size: 1.5rem;
     font-weight: 500;
@@ -371,6 +386,64 @@
     border-radius: var(--radius-sm);
     font-size: 0.8rem;
     color: var(--text-secondary);
+}
+
+/* Programs List */
+.programs-list {
+    margin-top: 24px;
+    margin-bottom: 16px;
+}
+
+.programs-list h4 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 16px;
+}
+
+.program-item {
+    background: var(--bg-secondary);
+    border-radius: var(--radius-md);
+    padding: 16px 20px;
+    margin-bottom: 12px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.program-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.program-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.program-name {
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--text-primary);
+}
+
+.program-price {
+    background: var(--primary);
+    color: white;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.program-info {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+    margin: 0;
 }
 
 /* Info Section */
@@ -590,6 +663,36 @@
 
 .tour-placeholder span {
     font-size: 3rem;
+}
+
+.tour-placeholder.no-tour {
+    background: var(--bg-secondary);
+    border-radius: var(--radius-lg);
+    padding: 60px 40px;
+    text-align: center;
+}
+
+.tour-placeholder.no-tour span {
+    font-size: 4rem;
+    margin-bottom: 8px;
+}
+
+.tour-placeholder.no-tour h3 {
+    color: var(--text-primary);
+    font-size: 1.3rem;
+    font-weight: 500;
+    margin-bottom: 8px;
+}
+
+.tour-placeholder.no-tour p {
+    color: var(--text-secondary);
+    max-width: 400px;
+    margin-bottom: 24px;
+    line-height: 1.6;
+}
+
+.tour-placeholder.no-tour .btn {
+    margin-top: 8px;
 }
 
 .tour-info h3 {
