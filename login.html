@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вход — Университет</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="header">
+        <div class="logo">🔷</div>
+        <nav class="nav">
+            <a href="index.html">На главную</a>
+        </nav>
+    </header>
+
+    <main class="login-container">
+        <section class="login-card">
+            <h2>Вход в личный кабинет</h2>
+            <p class="meta">Введите ваш логин и пароль</p>
+
+            <!--ERROR-->
+
+            <form class="login-form" method="post" action="/login">
+                <label class="field">
+                    <span>Логин</span>
+                    <input type="text" name="username" placeholder="Введите логин" required>
+                </label>
+
+                <label class="field">
+                    <span>Пароль</span>
+                    <input type="password" name="password" placeholder="Введите пароль" required>
+                </label>
+
+                <div class="login-actions">
+                    <button class="btn" type="submit">Войти</button>
+                    <a class="link" href="index.html">Назад</a>
+                </div>
+            </form>
+        </section>
+    </main>
+</body>
+</html>
