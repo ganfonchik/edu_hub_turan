@@ -89,7 +89,7 @@
         <div class="services-grid">
             <div class="services-tabs">
                 {% for faculty in university.faculties %}
-                <button class="service-tab {% if forloop.first %}active{% endif %}">{{ faculty.name|truncatewords:3 }}</button>
+                <button class="service-tab {% if forloop.first %}active{% endif %}" data-index="{{ forloop.counter0 }}">{{ faculty.name|truncatewords:3 }}</button>
                 {% endfor %}
             </div>
             
@@ -99,21 +99,33 @@
             
             <div class="service-content">
                 <div class="section-label">Образование</div>
-                {% if university.faculties %}
-                <h3>{{ university.faculties.0.name }}</h3>
-                <p>{{ university.faculties.0.description }}</p>
-                
-                <div class="service-feature">
-                    <div class="service-feature-icon">✓</div>
-                    <p>Современные программы обучения по международным стандартам</p>
+                {% for faculty in university.faculties %}
+                <div class="faculty-content {% if forloop.first %}active{% endif %}" data-faculty="{{ forloop.counter0 }}">
+                    <h3>{{ faculty.icon }} {{ faculty.name }}</h3>
+                    <p>{{ faculty.description }}</p>
+                    
+                    {% if faculty.programs %}
+                    <div class="programs-list">
+                        <h4>📚 Программы обучения:</h4>
+                        {% for program in faculty.programs %}
+                        <div class="program-item">
+                            <div class="program-header">
+                                <span class="program-name">{{ program.name }}</span>
+                                <span class="program-price">{{ program.price }} тг/год</span>
+                            </div>
+                            <p class="program-info">{{ program.info }}</p>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                    
+                    <div class="specialties-list">
+                        {% for spec in faculty.specialties %}
+                        <span class="specialty-tag">{{ spec }}</span>
+                        {% endfor %}
+                    </div>
                 </div>
-                
-                <div class="specialties-list">
-                    {% for spec in university.faculties.0.specialties %}
-                    <span class="specialty-tag">{{ spec }}</span>
-                    {% endfor %}
-                </div>
-                {% endif %}
+                {% endfor %}
                 
                 <a href="{{ university.admission_url }}" class="about-link" style="margin-top: 24px; display: inline-flex;" target="_blank">Подать заявку</a>
             </div>
@@ -242,21 +254,24 @@
 <section class="tour-section" id="tour">
     <div class="container">
         <div class="tour-header">
-            <h2>🎥 Виртуальный тур по кампусу</h2>
+            <h2>🎥 Виртуальный 3D-тур по кампусу</h2>
         </div>
         <div class="tour-grid">
             <div class="tour-frame-wrapper">
                 {% if university.tour_url %}
                 <iframe src="{{ university.tour_url }}" allowfullscreen></iframe>
                 {% else %}
-                <div class="tour-placeholder">
-                    <span>🏛️</span>
-                    <p>3D-тур скоро появится</p>
+                <div class="tour-placeholder no-tour">
+                    <span>😔</span>
+                    <h3>3D-тур пока недоступен</h3>
+                    <p>К сожалению, у {{ university.name_short }} пока нет виртуального тура. Но ты можешь посетить День открытых дверей!</p>
+                    <a href="{{ university.open_day_url }}" class="btn btn-primary" target="_blank">📅 Записаться на экскурсию</a>
                 </div>
                 {% endif %}
             </div>
             
             <div class="tour-info">
+                {% if university.tour_url %}
                 <h3>Познакомься с кампусом онлайн</h3>
                 <p>Не можешь приехать на День открытых дверей? Пройди виртуальный тур и посмотри аудитории, библиотеку, столовую и территорию университета прямо из дома!</p>
                 <div class="tour-features">
@@ -273,6 +288,24 @@
                         <span>✓</span> Спортивные объекты
                     </div>
                 </div>
+                {% else %}
+                <h3>Приходи к нам лично!</h3>
+                <p>Хоть виртуального тура пока нет, мы всегда рады видеть тебя в университете. Запишись на экскурсию и увидь всё своими глазами!</p>
+                <div class="tour-features">
+                    <div class="tour-feature">
+                        <span>📸</span> Фотографии кампуса в Instagram
+                    </div>
+                    <div class="tour-feature">
+                        <span>🎬</span> Видео на YouTube канале
+                    </div>
+                    <div class="tour-feature">
+                        <span>📅</span> День открытых дверей
+                    </div>
+                    <div class="tour-feature">
+                        <span>🚶</span> Индивидуальная экскурсия
+                    </div>
+                </div>
+                {% endif %}
             </div>
         </div>
     </div>
@@ -296,4 +329,31 @@
         </div>
     </div>
 </section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Faculty tabs switching
+    document.querySelectorAll('.service-tab').forEach(tab => {
+        tab.addEventListener('click', function() {
+            const index = this.dataset.index;
+            
+            // Remove active from all tabs
+            document.querySelectorAll('.service-tab').forEach(t => t.classList.remove('active'));
+            // Add active to clicked tab
+            this.classList.add('active');
+            
+            // Hide all faculty contents
+            document.querySelectorAll('.faculty-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            // Show selected faculty content
+            const selectedContent = document.querySelector(`.faculty-content[data-faculty="${index}"]`);
+            if (selectedContent) {
+                selectedContent.classList.add('active');
+            }
+        });
+    });
+</script>
 {% endblock %}

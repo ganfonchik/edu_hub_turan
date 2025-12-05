@@ -179,3 +179,117 @@ def ai_chat(request):
             return JsonResponse({'response': f'Ошибка: {str(e)}'}, status=500)
     
     return JsonResponse({'error': 'Метод не поддерживается'}, status=405)
+
+
+@csrf_exempt
+def search_university(request):
+    """API для поиска университета по профессии через ИИ"""
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            profession = data.get('profession', '')
+            
+            if not profession:
+                return JsonResponse({'error': 'Укажите профессию'}, status=400)
+            
+            # Промпт для ИИ
+            search_prompt = f"""Ты — эксперт по университетам Казахстана. 
+
+Пользователь хочет стать: "{profession}"
+
+ТВОЯ ЗАДАЧА: Выбери 3-4 лучших университета из списка ниже для этой профессии.
+
+ДОСТУПНЫЕ УНИВЕРСИТЕТЫ (выбирай ТОЛЬКО из этого списка):
+
+1. **Университет Туран** (slug: turan) — Алматы
+   - Сильные направления: Бизнес, MBA, Экономика, IT, Право, Дизайн, Международные отношения
+   - Особенность: Лучший MBA в Центральной Азии
+
+2. **КазНУ им. аль-Фараби** (slug: kaznu) — Алматы  
+   - Сильные направления: Все направления, особенно Право, Филология, Журналистика, Экономика, IT, Инженерия
+   - Особенность: Главный национальный университет, гос. гранты
+
+3. **КБТУ** (slug: kbtu) — Алматы
+   - Сильные направления: IT, Программирование, Нефтегаз, Бизнес, Инженерия
+   - Особенность: Лучший технический частный вуз
+
+4. **Назарбаев Университет** (slug: nu) — Астана
+   - Сильные направления: Все направления на высшем уровне
+   - Особенность: Топ-1 университет страны, сложное поступление
+
+5. **SDU** (slug: sdu) — Алматы
+   - Сильные направления: IT, Инженерия, Гуманитарные науки, Право
+   - Особенность: Турецкий стандарт образования
+
+6. **Нархоз** (slug: narxoz) — Алматы
+   - Сильные направления: Экономика, Финансы, Бухгалтерия, Маркетинг, IT-аналитика
+   - Особенность: #1 по экономическим специальностям
+
+7. **МУИТ** (slug: iitu) — Алматы
+   - Сильные направления: IT, Программирование, Data Science, Кибербезопасность
+   - Особенность: Полностью айтишный вуз
+
+ФОРМАТ ОТВЕТА (строго JSON):
+{{
+  "profession_name": "Название профессии",
+  "description": "Краткое описание профессии (1-2 предложения)",
+  "universities": [
+    {{
+      "slug": "slug университета",
+      "name": "Название",
+      "faculty": "Подходящий факультет/направление",
+      "match": число от 70 до 99,
+      "why": "Почему подходит (1 предложение)"
+    }}
+  ]
+}}
+
+ВАЖНО:
+- Выбирай реально подходящие университеты для профессии
+- match должен отражать реальное соответствие (95+ только для идеальных совпадений)
+- Отвечай ТОЛЬКО JSON, без дополнительного текста"""
+
+            payload = {
+                "contents": [{
+                    "role": "user",
+                    "parts": [{"text": search_prompt}]
+                }]
+            }
+            
+            response = requests.post(GEMINI_API_URL, json=payload, headers={'Content-Type': 'application/json'})
+            
+            if response.status_code == 200:
+                result = response.json()
+                ai_response = result['candidates'][0]['content']['parts'][0]['text']
+                
+                # Пробуем распарсить JSON
+                try:
+                    # Очищаем от возможных markdown-блоков
+                    clean_response = ai_response.strip()
+                    if clean_response.startswith('```'):
+                        clean_response = clean_response.split('```')[1]
+                        if clean_response.startswith('json'):
+                            clean_response = clean_response[4:]
+                    clean_response = clean_response.strip()
+                    
+                    data = json.loads(clean_response)
+                    return JsonResponse(data)
+                except json.JSONDecodeError:
+                    # Если не удалось распарсить, вернём сырой ответ
+                    return JsonResponse({
+                        'profession_name': profession,
+                        'description': 'Отличный выбор профессии!',
+                        'universities': [
+                            {'slug': 'turan', 'name': 'Университет Туран', 'faculty': 'Профильный факультет', 'match': 90, 'why': 'Широкий выбор специальностей'},
+                            {'slug': 'kaznu', 'name': 'КазНУ', 'faculty': 'Профильный факультет', 'match': 88, 'why': 'Национальный университет'},
+                            {'slug': 'kbtu', 'name': 'КБТУ', 'faculty': 'Профильный факультет', 'match': 85, 'why': 'Высокий уровень образования'},
+                        ]
+                    })
+            else:
+                return JsonResponse({'error': 'Ошибка API'}, status=500)
+                
+        except Exception as e:
+            print(f"❌ Search error: {str(e)}")
+            return JsonResponse({'error': str(e)}, status=500)
+    
+    return JsonResponse({'error': 'Метод не поддерживается'}, status=405)

@@ -11,4 +11,5 @@ urlpatterns = [
     path('university/<str:slug>/', universities_views.university_detail, name='university_detail'),
     path('admin/', admin.site.urls),
     path('ai-chat/', ai_brain.ai_chat, name='ai_chat'),
+    path('search-university/', ai_brain.search_university, name='search_university'),
 ]
