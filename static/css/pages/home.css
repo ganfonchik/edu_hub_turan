@@ -1,33 +1,31 @@
 /* ============================================
-   Edu Hub - Home Page Styles (Elegant Minimalist)
+   Edu Hub - Home Page Styles (Minimalist)
    ============================================ */
 
 /* Hero Section */
 .hero {
-    min-height: 100vh;
+    min-height: 80vh;
     display: flex;
-    flex-direction: column;
-    justify-content: center;
     align-items: center;
-    text-align: center;
+    justify-content: center;
     padding: 120px 60px 80px;
 }
 
-.hero-badge {
-    background: var(--bg-white);
-    padding: 10px 20px;
-    border-radius: var(--radius-sm);
-    font-size: 0.85rem;
-    color: var(--text-secondary);
-    margin-bottom: 32px;
+.hero-content {
+    max-width: 700px;
+    text-align: center;
+}
+
+.hero .section-label {
+    justify-content: center;
+    margin-bottom: 24px;
 }
 
 .hero h1 {
-    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    font-size: clamp(2.5rem, 5vw, 4rem);
     font-weight: 400;
     line-height: 1.15;
     margin-bottom: 24px;
-    max-width: 900px;
     letter-spacing: -0.02em;
 }
 
@@ -39,47 +37,33 @@
     font-size: 1.1rem;
     color: var(--text-secondary);
     max-width: 550px;
-    margin-bottom: 40px;
+    margin: 0 auto 40px;
     line-height: 1.7;
 }
 
 .hero-buttons {
     display: flex;
     gap: 16px;
+    justify-content: center;
     flex-wrap: wrap;
-    justify-content: center;
+    position: relative;
+    z-index: 10;
 }
 
-/* Stats Section */
-.stats-section {
-    display: flex;
-    justify-content: center;
-    gap: 80px;
-    padding: 60px 0;
-    border-top: 1px solid var(--border-light);
-    border-bottom: 1px solid var(--border-light);
-    margin: 0 60px;
-}
-
-.stat-item {
-    text-align: center;
-}
-
-.stat-number {
-    font-size: 2.5rem;
-    font-weight: 500;
-    color: var(--color-olive);
-}
-
-.stat-label {
-    color: var(--text-light);
-    font-size: 0.9rem;
-    margin-top: 8px;
+.hero-buttons .btn {
+    position: relative;
+    z-index: 10;
 }
 
 /* Features Section */
 .features-section {
-    padding: 100px 0;
+    padding: 100px 60px;
+    max-width: var(--container-max);
+    margin: 0 auto;
+}
+
+.features-section .section-label {
+    justify-content: center;
 }
 
 .features-section h2 {
@@ -91,20 +75,15 @@
 
 .features-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: repeat(3, 1fr);
     gap: 24px;
-    max-width: var(--container-max);
-    margin: 0 auto;
-    padding: 0 60px;
 }
 
 .feature-card {
     background: var(--bg-white);
     border-radius: var(--radius-lg);
     padding: 40px 32px;
-    text-align: center;
     transition: all var(--transition-base);
-    cursor: pointer;
 }
 
 .feature-card:hover {
@@ -112,69 +91,130 @@
     transform: translateY(-4px);
 }
 
-.feature-icon {
-    font-size: 2.5rem;
+.feature-number {
+    font-size: 3rem;
+    font-weight: 300;
+    color: var(--color-olive);
     margin-bottom: 20px;
+    line-height: 1;
 }
 
 .feature-card h3 {
     font-size: 1.1rem;
-    font-weight: 500;
+    font-weight: 600;
     margin-bottom: 12px;
 }
 
 .feature-card p {
     color: var(--text-secondary);
-    font-size: 0.9rem;
+    font-size: 0.95rem;
     line-height: 1.6;
+}
+
+/* Directions Section */
+.directions-section {
+    padding: 80px 60px;
+    max-width: var(--container-max);
+    margin: 0 auto;
+}
+
+.directions-section .section-label {
+    justify-content: center;
+}
+
+.directions-section h2 {
+    text-align: center;
+    margin-bottom: 50px;
+    font-size: 2rem;
+    font-weight: 500;
+}
+
+.directions-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 16px;
+}
+
+.direction-card {
+    background: var(--bg-white);
+    border-radius: var(--radius-md);
+    padding: 30px 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: all var(--transition-base);
+    border: 1px solid var(--border-light);
+}
+
+.direction-card:hover {
+    background: var(--color-olive);
+    color: var(--text-white);
+    transform: translateY(-4px);
+    box-shadow: 0 12px 30px rgba(74, 93, 63, 0.2);
+}
+
+.direction-card:hover h3 {
+    color: var(--text-white);
+}
+
+.direction-icon {
+    font-size: 2rem;
+    display: block;
+    margin-bottom: 12px;
+}
+
+.direction-card h3 {
+    font-size: 0.85rem;
+    font-weight: 500;
+    transition: color var(--transition-base);
 }
 
 /* CTA Section */
 .cta-section {
+    padding: 100px 60px;
     max-width: var(--container-max);
     margin: 0 auto;
-    padding: 100px 60px;
 }
 
-.cta-box {
+.cta-content {
     background: var(--bg-olive);
     border-radius: var(--radius-lg);
     padding: 80px 60px;
     text-align: center;
 }
 
-.cta-box h2 {
+.cta-content h2 {
     font-size: 2rem;
     font-weight: 500;
     color: var(--text-white);
     margin-bottom: 16px;
 }
 
-.cta-box p {
+.cta-content p {
     color: rgba(255, 255, 255, 0.8);
     font-size: 1rem;
     margin-bottom: 32px;
 }
 
-.cta-box .btn-primary {
+.cta-content .btn-primary {
     background: var(--color-white);
     color: var(--color-olive);
 }
 
-.cta-box .btn-primary:hover {
+.cta-content .btn-primary:hover {
     background: var(--color-cream);
 }
 
 /* Responsive */
 @media (max-width: 1024px) {
-    .stats-section {
-        margin: 0 40px;
+    .directions-grid {
+        grid-template-columns: repeat(3, 1fr);
     }
 }
 
 @media (max-width: 768px) {
     .hero {
         padding: 100px 24px 60px;
+        min-height: 70vh;
     }
     
     .hero h1 {
@@ -185,23 +225,12 @@
         font-size: 1rem;
     }
     
-    .stats-section {
-        flex-wrap: wrap;
-        gap: 40px;
-        margin: 0 24px;
-        padding: 40px 0;
-    }
-    
-    .stat-number {
-        font-size: 2rem;
+    .features-section {
+        padding: 60px 24px;
     }
     
     .features-grid {
-        padding: 0 24px;
-    }
-    
-    .features-section {
-        padding: 60px 0;
+        grid-template-columns: 1fr;
     }
     
     .features-section h2 {
@@ -209,15 +238,46 @@
         font-size: 1.5rem;
     }
     
+    .directions-section {
+        padding: 60px 24px;
+    }
+    
+    .directions-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .directions-section h2 {
+        font-size: 1.5rem;
+    }
+    
     .cta-section {
         padding: 60px 24px;
     }
     
-    .cta-box {
+    .cta-content {
         padding: 50px 24px;
     }
     
-    .cta-box h2 {
+    .cta-content h2 {
         font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .directions-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+    }
+    
+    .direction-card {
+        padding: 20px 16px;
+    }
+    
+    .direction-icon {
+        font-size: 1.5rem;
+    }
+    
+    .direction-card h3 {
+        font-size: 0.8rem;
     }
 }
