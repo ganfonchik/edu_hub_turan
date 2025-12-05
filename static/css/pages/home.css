@@ -1,0 +1,223 @@
+/* ============================================
+   Edu Hub - Home Page Styles (Elegant Minimalist)
+   ============================================ */
+
+/* Hero Section */
+.hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 120px 60px 80px;
+}
+
+.hero-badge {
+    background: var(--bg-white);
+    padding: 10px 20px;
+    border-radius: var(--radius-sm);
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin-bottom: 32px;
+}
+
+.hero h1 {
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    font-weight: 400;
+    line-height: 1.15;
+    margin-bottom: 24px;
+    max-width: 900px;
+    letter-spacing: -0.02em;
+}
+
+.hero h1 span {
+    color: var(--color-olive);
+}
+
+.hero p {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    max-width: 550px;
+    margin-bottom: 40px;
+    line-height: 1.7;
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+/* Stats Section */
+.stats-section {
+    display: flex;
+    justify-content: center;
+    gap: 80px;
+    padding: 60px 0;
+    border-top: 1px solid var(--border-light);
+    border-bottom: 1px solid var(--border-light);
+    margin: 0 60px;
+}
+
+.stat-item {
+    text-align: center;
+}
+
+.stat-number {
+    font-size: 2.5rem;
+    font-weight: 500;
+    color: var(--color-olive);
+}
+
+.stat-label {
+    color: var(--text-light);
+    font-size: 0.9rem;
+    margin-top: 8px;
+}
+
+/* Features Section */
+.features-section {
+    padding: 100px 0;
+}
+
+.features-section h2 {
+    text-align: center;
+    margin-bottom: 60px;
+    font-size: 2rem;
+    font-weight: 500;
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+    max-width: var(--container-max);
+    margin: 0 auto;
+    padding: 0 60px;
+}
+
+.feature-card {
+    background: var(--bg-white);
+    border-radius: var(--radius-lg);
+    padding: 40px 32px;
+    text-align: center;
+    transition: all var(--transition-base);
+    cursor: pointer;
+}
+
+.feature-card:hover {
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+    transform: translateY(-4px);
+}
+
+.feature-icon {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+}
+
+.feature-card h3 {
+    font-size: 1.1rem;
+    font-weight: 500;
+    margin-bottom: 12px;
+}
+
+.feature-card p {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    line-height: 1.6;
+}
+
+/* CTA Section */
+.cta-section {
+    max-width: var(--container-max);
+    margin: 0 auto;
+    padding: 100px 60px;
+}
+
+.cta-box {
+    background: var(--bg-olive);
+    border-radius: var(--radius-lg);
+    padding: 80px 60px;
+    text-align: center;
+}
+
+.cta-box h2 {
+    font-size: 2rem;
+    font-weight: 500;
+    color: var(--text-white);
+    margin-bottom: 16px;
+}
+
+.cta-box p {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 1rem;
+    margin-bottom: 32px;
+}
+
+.cta-box .btn-primary {
+    background: var(--color-white);
+    color: var(--color-olive);
+}
+
+.cta-box .btn-primary:hover {
+    background: var(--color-cream);
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .stats-section {
+        margin: 0 40px;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero {
+        padding: 100px 24px 60px;
+    }
+    
+    .hero h1 {
+        font-size: 2rem;
+    }
+    
+    .hero p {
+        font-size: 1rem;
+    }
+    
+    .stats-section {
+        flex-wrap: wrap;
+        gap: 40px;
+        margin: 0 24px;
+        padding: 40px 0;
+    }
+    
+    .stat-number {
+        font-size: 2rem;
+    }
+    
+    .features-grid {
+        padding: 0 24px;
+    }
+    
+    .features-section {
+        padding: 60px 0;
+    }
+    
+    .features-section h2 {
+        margin-bottom: 40px;
+        font-size: 1.5rem;
+    }
+    
+    .cta-section {
+        padding: 60px 24px;
+    }
+    
+    .cta-box {
+        padding: 50px 24px;
+    }
+    
+    .cta-box h2 {
+        font-size: 1.5rem;
+    }
+}

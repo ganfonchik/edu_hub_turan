@@ -1,0 +1,197 @@
+/* ============================================
+   Edu Hub - Universities List Page
+   ============================================ */
+
+/* Page Header */
+.page-header {
+    padding: 140px 60px 60px;
+    text-align: center;
+}
+
+.page-header .section-label {
+    justify-content: center;
+    margin-bottom: 16px;
+}
+
+.page-header h1 {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 400;
+    margin-bottom: 16px;
+    letter-spacing: -0.02em;
+}
+
+.page-header h1 span {
+    color: var(--color-olive);
+}
+
+.page-header p {
+    color: var(--text-secondary);
+    font-size: 1.05rem;
+    max-width: 500px;
+    margin: 0 auto;
+    line-height: 1.7;
+}
+
+/* Filters */
+.filters {
+    max-width: var(--container-max);
+    margin: 0 auto 48px;
+    padding: 0 60px;
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.filter-btn {
+    padding: 10px 20px;
+    background: var(--bg-white);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-sm);
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all var(--transition-base);
+    font-size: 0.9rem;
+    font-weight: 400;
+}
+
+.filter-btn:hover {
+    border-color: var(--color-olive);
+    color: var(--text-primary);
+}
+
+.filter-btn.active {
+    background: var(--bg-olive);
+    border-color: var(--bg-olive);
+    color: var(--text-white);
+}
+
+/* Universities Container */
+.universities-container {
+    max-width: var(--container-max);
+    margin: 0 auto;
+    padding: 0 60px 100px;
+}
+
+/* Universities Grid */
+.universities-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 24px;
+}
+
+/* University Card */
+.uni-card {
+    background: var(--bg-white);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    transition: all var(--transition-base);
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+}
+
+.uni-card:hover {
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    transform: translateY(-4px);
+}
+
+.uni-card-image {
+    height: 180px;
+    background: var(--bg-secondary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-light);
+    font-size: 0.875rem;
+}
+
+.uni-card-body {
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.uni-type {
+    font-size: 0.75rem;
+    color: var(--text-light);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 8px;
+}
+
+.uni-card h3 {
+    font-size: 1.2rem;
+    font-weight: 500;
+    margin-bottom: 8px;
+    color: var(--text-primary);
+}
+
+.uni-card p {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    line-height: 1.6;
+    margin-bottom: 16px;
+    flex: 1;
+}
+
+.uni-meta {
+    display: flex;
+    gap: 16px;
+    font-size: 0.8rem;
+    color: var(--text-light);
+    margin-bottom: 12px;
+}
+
+.uni-price {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--color-olive);
+    padding-top: 12px;
+    border-top: 1px solid var(--border-light);
+}
+
+/* CTA Section Override */
+.cta-section {
+    max-width: var(--container-max);
+    margin: 0 auto;
+    padding: 0 60px 100px;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .page-header,
+    .filters,
+    .universities-container,
+    .cta-section {
+        padding-left: 40px;
+        padding-right: 40px;
+    }
+}
+
+@media (max-width: 768px) {
+    .page-header {
+        padding: 120px 24px 40px;
+    }
+
+    .page-header h1 {
+        font-size: 1.75rem;
+    }
+
+    .filters,
+    .universities-container,
+    .cta-section {
+        padding-left: 24px;
+        padding-right: 24px;
+    }
+    
+    .filters {
+        justify-content: flex-start;
+    }
+    
+    .universities-grid {
+        grid-template-columns: 1fr;
+    }
+}
