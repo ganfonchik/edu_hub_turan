@@ -32,6 +32,40 @@
     line-height: 1.7;
 }
 
+/* Compare Button */
+.compare-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 28px;
+    padding: 16px 36px;
+    background: linear-gradient(135deg, var(--primary) 0%, #3a4a32 100%);
+    color: white;
+    text-decoration: none;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 6px 20px rgba(74, 93, 63, 0.35);
+    border: 2px solid transparent;
+    animation: pulse-btn 2s infinite;
+}
+
+.compare-btn:hover {
+    background: linear-gradient(135deg, #3a4a32 0%, #2a3a25 100%);
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 10px 30px rgba(74, 93, 63, 0.45);
+}
+
+@keyframes pulse-btn {
+    0%, 100% {
+        box-shadow: 0 6px 20px rgba(74, 93, 63, 0.35);
+    }
+    50% {
+        box-shadow: 0 6px 30px rgba(74, 93, 63, 0.5);
+    }
+}
+
 /* Filters */
 .filters {
     max-width: var(--container-max);
