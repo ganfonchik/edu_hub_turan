@@ -8,7 +8,8 @@ import universities_views
 urlpatterns = [
     path('', TemplateView.as_view(template_name='index.html'), name='home'),
     path('test/', TemplateView.as_view(template_name='test.html'), name='test'),
-    path('universities/', universities_views.universities_list, name='universities'),
+    path('universities/', universities_views.universities_list, name='universities_list'),
+    path('universities/comparison/', TemplateView.as_view(template_name='comparison.html'), name='universities_comparison'),
     path('university/<str:slug>/', universities_views.university_detail, name='university_detail'),
     path('compare/', TemplateView.as_view(template_name='compare.html'), name='compare'),
     path('admin/', admin.site.urls),

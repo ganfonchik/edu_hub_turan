@@ -1,0 +1,225 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Сравнение университетов — Edu Hub{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/pages/comparison.css' %}">
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="comparison-hero">
+    <div class="container">
+        <div class="hero-content">
+            <span class="hero-badge">Сравнение</span>
+            <h1>Сравнение университетов Казахстана</h1>
+            <p>Объективный анализ плюсов и минусов топовых вузов страны. Найди идеальный университет для себя!</p>
+        </div>
+    </div>
+</section>
+
+<!-- Comparison Table Section -->
+<section class="comparison-section">
+    <div class="container">
+        <div class="comparison-table-wrapper">
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th class="uni-column">Университет</th>
+                        <th class="plus-column">Плюсы</th>
+                        <th class="minus-column">Минусы</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="uni-cell">
+                            <a href="{% url 'university_detail' 'kbtu' %}" class="uni-link">
+                                <span class="uni-name">КБТУ</span>
+                            </a>
+                        </td>
+                        <td class="plus-cell">
+                            <ul>
+                                <li>Сильные IT и инженерные программы</li>
+                                <li>Британские стандарты образования</li>
+                                <li>100% трудоустройство выпускников</li>
+                                <li>Партнёрство с Shell, KPO, Microsoft</li>
+                            </ul>
+                        </td>
+                        <td class="minus-cell">
+                            <ul>
+                                <li>Высокая стоимость обучения (от 2.5 млн)</li>
+                                <li>Высокая учебная нагрузка</li>
+                                <li>Ограниченные гуманитарные направления</li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="uni-cell">
+                            <a href="{% url 'university_detail' 'nu' %}" class="uni-link">
+                                <span class="uni-name">Назарбаев Университет</span>
+                            </a>
+                        </td>
+                        <td class="plus-cell">
+                            <ul>
+                                <li>Бесплатное обучение для всех!</li>
+                                <li>Международные преподаватели из топ-вузов</li>
+                                <li>Партнёрство с Duke, Cambridge, UCL</li>
+                                <li>Современный кампус мирового уровня</li>
+                            </ul>
+                        </td>
+                        <td class="minus-cell">
+                            <ul>
+                                <li>Очень высокая конкуренция при поступлении</li>
+                                <li>Только Астана — далеко от Алматы</li>
+                                <li>Интенсивная программа, мало свободного времени</li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="uni-cell">
+                            <a href="{% url 'university_detail' 'iitu' %}" class="uni-link">
+                                <span class="uni-name">МУИТ (IITU)</span>
+                            </a>
+                        </td>
+                        <td class="plus-cell">
+                            <ul>
+                                <li>ТОП-3 IT вузов Казахстана</li>
+                                <li>Уникальные лаборатории: 5G, AI Lab</li>
+                                <li>Военная кафедра по кибербезопасности</li>
+                                <li>90% выпускников работают в IT</li>
+                            </ul>
+                        </td>
+                        <td class="minus-cell">
+                            <ul>
+                                <li>Только IT направления</li>
+                                <li>Меньше международных связей</li>
+                                <li>Молодой вуз (с 2009 года)</li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="uni-cell">
+                            <a href="{% url 'university_detail' 'sdu' %}" class="uni-link">
+                                <span class="uni-name">SDU</span>
+                            </a>
+                        </td>
+                        <td class="plus-cell">
+                            <ul>
+                                <li>Сильный IT-факультет</li>
+                                <li>Доступные цены (от 1.1 млн)</li>
+                                <li>Просторный зелёный кампус</li>
+                                <li>Обмены с вузами Турции и Европы</li>
+                            </ul>
+                        </td>
+                        <td class="minus-cell">
+                            <ul>
+                                <li>Кампус в Каскелене — далеко от центра</li>
+                                <li>Меньше научных исследований</li>
+                                <li>Ограниченный выбор программ</li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="uni-cell">
+                            <a href="{% url 'university_detail' 'kaznu' %}" class="uni-link">
+                                <span class="uni-name">КазНУ им. аль-Фараби</span>
+                            </a>
+                        </td>
+                        <td class="plus-cell">
+                            <ul>
+                                <li>#1 в Казахстане, топ-200 мира</li>
+                                <li>150+ программ на выбор</li>
+                                <li>Много бюджетных мест (гранты)</li>
+                                <li>Сильная научная база, 15 НИИ</li>
+                            </ul>
+                        </td>
+                        <td class="minus-cell">
+                            <ul>
+                                <li>Большая бюрократия</li>
+                                <li>Переполненные группы</li>
+                                <li>Устаревшая инфраструктура в некоторых корпусах</li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="uni-cell">
+                            <a href="{% url 'university_detail' 'narxoz' %}" class="uni-link">
+                                <span class="uni-name">Нархоз</span>
+                            </a>
+                        </td>
+                        <td class="plus-cell">
+                            <ul>
+                                <li>#1 по бизнес-образованию в ЦА</li>
+                                <li>Аккредитации ACCA, CIMA, FIBAA</li>
+                                <li>90+ вузов-партнёров в 37 странах</li>
+                                <li>Лучший кампус и общежития</li>
+                            </ul>
+                        </td>
+                        <td class="minus-cell">
+                            <ul>
+                                <li>Ограниченные технические направления</li>
+                                <li>Высокая стоимость (от 1.2 млн)</li>
+                                <li>Фокус только на бизнес/экономику</li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="uni-cell">
+                            <a href="{% url 'university_detail' 'turan' %}" class="uni-link">
+                                <span class="uni-name">Туран</span>
+                            </a>
+                        </td>
+                        <td class="plus-cell">
+                            <ul>
+                                <li>Творческие и гуманитарные направления</li>
+                                <li>Доступная стоимость обучения</li>
+                                <li>Международные программы</li>
+                                <li>Удобное расположение в центре</li>
+                            </ul>
+                        </td>
+                        <td class="minus-cell">
+                            <ul>
+                                <li>Меньше технических программ</li>
+                                <li>Ограниченные ресурсы для исследований</li>
+                                <li>Менее известен за рубежом</li>
+                            </ul>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+<!-- Summary Section -->
+<section class="summary-section">
+    <div class="container">
+        <h2>Краткий вывод</h2>
+        <div class="summary-grid">
+            <div class="summary-card">
+                <h3>Для IT-шников</h3>
+                <p><strong>КБТУ, МУИТ, SDU</strong> — лучшие программы по программированию и кибербезопасности</p>
+            </div>
+            <div class="summary-card">
+                <h3>Для бизнеса</h3>
+                <p><strong>Нархоз, КБТУ</strong> — топовое бизнес-образование с международными аккредитациями</p>
+            </div>
+            <div class="summary-card">
+                <h3>Бесплатно</h3>
+                <p><strong>НУ, КазНУ</strong> — много грантов и бюджетных мест</p>
+            </div>
+            <div class="summary-card">
+                <h3>Для науки</h3>
+                <p><strong>КазНУ, НУ</strong> — сильнейшая научная база и исследования</p>
+            </div>
+        </div>
+        
+        <div class="cta-block">
+            <p>Не можешь определиться? Спроси у нашего AI-консультанта!</p>
+            <a href="{% url 'home' %}#chat" class="btn btn-primary">Задать вопрос AI</a>
+            <a href="{% url 'universities_list' %}" class="btn btn-secondary">Все университеты</a>
+        </div>
+    </div>
+</section>
+{% endblock %}
