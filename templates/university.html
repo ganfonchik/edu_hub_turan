@@ -180,6 +180,120 @@
     </div>
 </section>
 
+<!-- International Cooperation Section -->
+<section class="international-section">
+    <div class="container">
+        <div class="international-header">
+            <div class="section-label">Международное сотрудничество</div>
+            <h2>Образование без границ</h2>
+            <p>Партнёрство с ведущими университетами мира и программы академической мобильности</p>
+        </div>
+        
+        {% if university.international %}
+        <div class="international-grid">
+            <!-- Exchange Programs -->
+            {% if university.international.exchange_programs %}
+            <div class="international-card">
+                <div class="card-icon">🌍</div>
+                <h3>Программы обмена</h3>
+                <p>{{ university.international.exchange_programs.description }}</p>
+                <ul class="international-list">
+                    {% for program in university.international.exchange_programs.programs %}
+                    <li>{{ program }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+            
+            <!-- Partner Universities -->
+            {% if university.international.partner_universities %}
+            <div class="international-card">
+                <div class="card-icon">🎓</div>
+                <h3>Университеты-партнёры</h3>
+                <p>{{ university.international.partner_universities.description }}</p>
+                <div class="partners-logos">
+                    {% for partner in university.international.partner_universities.partners %}
+                    <div class="partner-item">
+                        <span class="partner-flag">{{ partner.flag }}</span>
+                        <span class="partner-name">{{ partner.name }}</span>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+            
+            <!-- Double Degrees -->
+            {% if university.international.double_degrees %}
+            <div class="international-card">
+                <div class="card-icon">📜</div>
+                <h3>Двойные дипломы</h3>
+                <p>{{ university.international.double_degrees.description }}</p>
+                <ul class="international-list">
+                    {% for degree in university.international.double_degrees.programs %}
+                    <li>{{ degree }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+            
+            <!-- International Internships -->
+            {% if university.international.internships %}
+            <div class="international-card">
+                <div class="card-icon">💼</div>
+                <h3>Международные стажировки</h3>
+                <p>{{ university.international.internships.description }}</p>
+                <ul class="international-list">
+                    {% for internship in university.international.internships.opportunities %}
+                    <li>{{ internship }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+            
+            <!-- Language Support -->
+            {% if university.international.language_support %}
+            <div class="international-card">
+                <div class="card-icon">🗣️</div>
+                <h3>Языковая подготовка</h3>
+                <p>{{ university.international.language_support.description }}</p>
+                <ul class="international-list">
+                    {% for support in university.international.language_support.programs %}
+                    <li>{{ support }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+            
+            <!-- International Accreditation -->
+            {% if university.international.accreditation %}
+            <div class="international-card">
+                <div class="card-icon">✅</div>
+                <h3>Международные аккредитации</h3>
+                <p>{{ university.international.accreditation.description }}</p>
+                <div class="accreditation-badges">
+                    {% for acc in university.international.accreditation.badges %}
+                    <span class="badge">{{ acc }}</span>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+        </div>
+        
+        <!-- Statistics -->
+        {% if university.international.statistics %}
+        <div class="international-stats">
+            {% for stat in university.international.statistics %}
+            <div class="stat-item">
+                <div class="stat-number">{{ stat.number }}</div>
+                <div class="stat-label">{{ stat.label }}</div>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+        {% endif %}
+    </div>
+</section>
+
 <!-- Contact Section -->
 <section class="contact-section">
     <div class="container">

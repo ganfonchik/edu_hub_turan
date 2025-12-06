@@ -28,10 +28,11 @@
     color: var(--text-secondary);
     font-size: 1.05rem;
     max-width: 500px;
-    margin: 0 auto;
+    margin: 0 auto 24px;
     line-height: 1.7;
 }
 
+<<<<<<< HEAD
 /* Compare Button */
 .compare-btn {
     display: inline-flex;
@@ -64,6 +65,32 @@
     50% {
         box-shadow: 0 6px 30px rgba(74, 93, 63, 0.5);
     }
+=======
+/* Compare CTA Button */
+.compare-cta-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 28px;
+    background: linear-gradient(135deg, var(--color-olive) 0%, #4a7a5f 100%);
+    color: white;
+    border-radius: 12px;
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(92, 132, 97, 0.3);
+    margin-top: 8px;
+}
+
+.compare-cta-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(92, 132, 97, 0.4);
+}
+
+.compare-cta-btn:active {
+    transform: translateY(0);
+>>>>>>> 64fb2df0c5929ab3c4a86c72a8782f1a3714a4e7
 }
 
 /* Filters */
