@@ -3,7 +3,7 @@
 
 {% block title %}Университеты Казахстана | Edu Hub{% endblock %}
 
-{% block styles %}
+{% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/pages/universities-list.css' %}">
 {% endblock %}
 
@@ -13,13 +13,7 @@
     <div class="section-label">Образование</div>
     <h1>Университеты <span>Казахстана</span></h1>
     <p>Выбери свой будущий вуз. Мы собрали лучшие университеты страны с подробной информацией.</p>
-<<<<<<< HEAD
-    <a href="{% url 'universities_comparison' %}" class="compare-btn">⚖️ Сравнить университеты</a>
-=======
-    <a href="/compare/" class="compare-cta-btn">
-        🤖 Помощь AI в выборе университета
-    </a>
->>>>>>> 64fb2df0c5929ab3c4a86c72a8782f1a3714a4e7
+    <a href="{% url 'universities_comparison' %}" class="compare-btn">Сравнить университеты</a>
 </header>
 
 <!-- Filters -->
@@ -61,8 +55,8 @@
         <h2>Не знаешь какой вуз выбрать?</h2>
         <p>Используй AI для сравнения университетов или пройди тест профориентации</p>
         <div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;">
-            <a href="/compare/" class="btn btn-primary btn-large">🤖 Сравнить с помощью AI</a>
-            <a href="/test/" class="btn btn-secondary btn-large">📋 Тест профориентации</a>
+            <a href="{% url 'universities_comparison' %}" class="btn btn-primary btn-large">Сравнить с помощью AI</a>
+            <a href="{% url 'test' %}" class="btn btn-secondary btn-large">Тест профориентации</a>
         </div>
     </div>
 </section>

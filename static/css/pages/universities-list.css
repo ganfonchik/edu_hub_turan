@@ -32,7 +32,6 @@
     line-height: 1.7;
 }
 
-<<<<<<< HEAD
 /* Compare Button */
 .compare-btn {
     display: inline-flex;
@@ -65,32 +64,6 @@
     50% {
         box-shadow: 0 6px 30px rgba(74, 93, 63, 0.5);
     }
-=======
-/* Compare CTA Button */
-.compare-cta-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 14px 28px;
-    background: linear-gradient(135deg, var(--color-olive) 0%, #4a7a5f 100%);
-    color: white;
-    border-radius: 12px;
-    text-decoration: none;
-    font-size: 1rem;
-    font-weight: 600;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 12px rgba(92, 132, 97, 0.3);
-    margin-top: 8px;
-}
-
-.compare-cta-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(92, 132, 97, 0.4);
-}
-
-.compare-cta-btn:active {
-    transform: translateY(0);
->>>>>>> 64fb2df0c5929ab3c4a86c72a8782f1a3714a4e7
 }
 
 /* Filters */
@@ -219,6 +192,62 @@
     max-width: var(--container-max);
     margin: 0 auto;
     padding: 0 60px 100px;
+}
+
+.cta-box {
+    background: var(--bg-white);
+    border-radius: var(--radius-lg);
+    padding: 48px;
+    text-align: center;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+}
+
+.cta-box h2 {
+    font-size: 1.8rem;
+    margin-bottom: 12px;
+    color: var(--text-primary);
+}
+
+.cta-box p {
+    color: var(--text-secondary);
+    margin-bottom: 24px;
+    font-size: 1.05rem;
+}
+
+.btn {
+    display: inline-block;
+    padding: 14px 28px;
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    font-size: 1rem;
+    text-decoration: none;
+    transition: all var(--transition-base);
+}
+
+.btn-primary {
+    background: var(--color-olive);
+    color: white;
+}
+
+.btn-primary:hover {
+    background: var(--color-olive-dark);
+    transform: translateY(-2px);
+}
+
+.btn-secondary {
+    background: transparent;
+    border: 2px solid var(--color-olive);
+    color: var(--color-olive);
+}
+
+.btn-secondary:hover {
+    background: var(--color-olive);
+    color: white;
+}
+
+.btn-large {
+    padding: 16px 32px;
+    font-size: 1.05rem;
 }
 
 /* Responsive */

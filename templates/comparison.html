@@ -57,6 +57,7 @@
                     <tr>
                         <td class="uni-cell">
                             <a href="{% url 'university_detail' 'nu' %}" class="uni-link">
+                                <img src="{% static 'nu_img1.jpeg' %}" alt="Назарбаев Университет" class="uni-logo">
                                 <span class="uni-name">Назарбаев Университет</span>
                             </a>
                         </td>
@@ -79,6 +80,7 @@
                     <tr>
                         <td class="uni-cell">
                             <a href="{% url 'university_detail' 'iitu' %}" class="uni-link">
+                                <img src="{% static 'iitu_logo.png' %}" alt="МУИТ" class="uni-logo">
                                 <span class="uni-name">МУИТ (IITU)</span>
                             </a>
                         </td>
@@ -145,6 +147,7 @@
                     <tr>
                         <td class="uni-cell">
                             <a href="{% url 'university_detail' 'narxoz' %}" class="uni-link">
+                                <img src="{% static 'narxoz_1.webp' %}" alt="Нархоз" class="uni-logo">
                                 <span class="uni-name">Нархоз</span>
                             </a>
                         </td>
@@ -214,12 +217,268 @@
                 <p><strong>КазНУ, НУ</strong> — сильнейшая научная база и исследования</p>
             </div>
         </div>
+    </div>
+</section>
+
+<!-- AI Compare Section -->
+<section class="ai-compare-section">
+    <div class="container">
+        <div class="ai-section-header">
+            <h2>AI Помощник в выборе университета</h2>
+            <p>Задавай вопросы, и я помогу выбрать идеальный вуз для тебя</p>
+        </div>
         
-        <div class="cta-block">
-            <p>Не можешь определиться? Спроси у нашего AI-консультанта!</p>
-            <a href="{% url 'home' %}#chat" class="btn btn-primary">Задать вопрос AI</a>
-            <a href="{% url 'universities_list' %}" class="btn btn-secondary">Все университеты</a>
+        <div class="compare-layout">
+            <!-- Chat Interface -->
+            <div class="compare-chat-container">
+                <div class="chat-header">
+                    <div class="ai-avatar">AI</div>
+                    <div class="ai-info">
+                        <h3>Edu Hub AI</h3>
+                        <span class="ai-status">Онлайн</span>
+                    </div>
+                </div>
+                
+                <div class="chat-messages" id="compareChatMessages">
+                    <!-- Приветственное сообщение -->
+                    <div class="message ai-message">
+                        <div class="message-avatar">AI</div>
+                        <div class="message-content">
+                            <p>Привет! Я — Edu Hub AI, твой помощник в выборе университета.</p>
+                            <p>Я помогу тебе:</p>
+                            <ul>
+                                <li>Сравнить университеты по параметрам</li>
+                                <li>Узнать плюсы и минусы каждого вуза</li>
+                                <li>Подобрать университет под твои цели</li>
+                                <li>Рассказать о программах, стоимости, перспективах</li>
+                            </ul>
+                            <p><strong>Начнём?</strong> Напиши, какие университеты хочешь сравнить, или спроси что угодно!</p>
+                            <p class="hint">Например: <em>"Сравни КазНУ и Назарбаев Университет"</em> или <em>"Какой университет лучше для IT?"</em></p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="chat-input-container">
+                    <textarea 
+                        id="compareMessageInput" 
+                        placeholder="Например: Сравни КБТУ и МУИТ для программиста..."
+                        rows="1"
+                    ></textarea>
+                    <button id="compareSendBtn" class="send-btn">
+                        <span class="send-icon">→</span>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Quick Compare Panel -->
+            <div class="quick-compare-panel">
+                <h3>Быстрое сравнение</h3>
+                <p>Выбери университеты для сравнения:</p>
+                
+                <div class="university-checkboxes">
+                    <label class="uni-checkbox">
+                        <input type="checkbox" value="turan" data-name="Туран">
+                        <span>Университет Туран</span>
+                    </label>
+                    <label class="uni-checkbox">
+                        <input type="checkbox" value="kaznu" data-name="КазНУ">
+                        <span>КазНУ им. аль-Фараби</span>
+                    </label>
+                    <label class="uni-checkbox">
+                        <input type="checkbox" value="kbtu" data-name="КБТУ">
+                        <span>КБТУ</span>
+                    </label>
+                    <label class="uni-checkbox">
+                        <input type="checkbox" value="nu" data-name="Назарбаев Университет">
+                        <span>Назарбаев Университет</span>
+                    </label>
+                    <label class="uni-checkbox">
+                        <input type="checkbox" value="sdu" data-name="SDU">
+                        <span>SDU</span>
+                    </label>
+                    <label class="uni-checkbox">
+                        <input type="checkbox" value="narxoz" data-name="Нархоз">
+                        <span>Нархоз Университет</span>
+                    </label>
+                    <label class="uni-checkbox">
+                        <input type="checkbox" value="iitu" data-name="МУИТ">
+                        <span>МУИТ</span>
+                    </label>
+                </div>
+                
+                <button id="quickCompareBtn" class="quick-compare-btn" disabled>
+                    Сравнить выбранные
+                </button>
+                
+                <div class="comparison-hints">
+                    <h4>Популярные вопросы:</h4>
+                    <button class="hint-btn" data-question="Какой университет лучше для изучения IT?">IT и программирование</button>
+                    <button class="hint-btn" data-question="Сравни стоимость обучения в КазНУ, КБТУ и Назарбаев Университете">Стоимость обучения</button>
+                    <button class="hint-btn" data-question="Где лучше изучать бизнес и экономику?">Бизнес и экономика</button>
+                    <button class="hint-btn" data-question="Какие университеты имеют общежития и сколько это стоит?">Общежития</button>
+                    <button class="hint-btn" data-question="Расскажи о международных программах обмена">Обмен за рубеж</button>
+                </div>
+            </div>
         </div>
     </div>
 </section>
+
+<script>
+// Авто-расширение textarea
+const textarea = document.getElementById('compareMessageInput');
+textarea.addEventListener('input', function() {
+    this.style.height = 'auto';
+    this.style.height = Math.min(this.scrollHeight, 120) + 'px';
+});
+
+// История сообщений для API
+let conversationHistory = [];
+
+// Отправка сообщения
+async function sendCompareMessage(message) {
+    if (!message.trim()) return;
+    
+    const messagesContainer = document.getElementById('compareChatMessages');
+    const sendBtn = document.getElementById('compareSendBtn');
+    
+    // Добавляем сообщение пользователя
+    addMessage(message, 'user');
+    textarea.value = '';
+    textarea.style.height = 'auto';
+    
+    // Добавляем индикатор загрузки
+    const loadingDiv = document.createElement('div');
+    loadingDiv.className = 'message ai-message loading';
+    loadingDiv.innerHTML = `
+        <div class="message-avatar">AI</div>
+        <div class="message-content">
+            <div class="typing-indicator">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+    `;
+    messagesContainer.appendChild(loadingDiv);
+    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    
+    sendBtn.disabled = true;
+    
+    try {
+        conversationHistory.push({
+            role: 'user',
+            parts: [{ text: message }]
+        });
+        
+        const response = await fetch('/ai-compare/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                message: message,
+                history: conversationHistory
+            })
+        });
+        
+        const data = await response.json();
+        messagesContainer.removeChild(loadingDiv);
+        
+        if (data.response) {
+            addMessage(data.response, 'ai');
+            conversationHistory.push({
+                role: 'model',
+                parts: [{ text: data.response }]
+            });
+        } else {
+            addMessage('Извини, произошла ошибка. Попробуй ещё раз!', 'ai');
+        }
+    } catch (error) {
+        messagesContainer.removeChild(loadingDiv);
+        addMessage('Не могу подключиться к серверу. Проверь интернет!', 'ai');
+    }
+    
+    sendBtn.disabled = false;
+}
+
+// Добавление сообщения в чат
+function addMessage(text, type) {
+    const messagesContainer = document.getElementById('compareChatMessages');
+    const messageDiv = document.createElement('div');
+    messageDiv.className = `message ${type}-message`;
+    
+    if (type === 'ai') {
+        messageDiv.innerHTML = `
+            <div class="message-avatar">AI</div>
+            <div class="message-content">${formatMessage(text)}</div>
+        `;
+    } else {
+        messageDiv.innerHTML = `
+            <div class="message-content">${escapeHtml(text)}</div>
+        `;
+    }
+    
+    messagesContainer.appendChild(messageDiv);
+    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+}
+
+// Форматирование сообщений от AI
+function formatMessage(text) {
+    text = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+    text = text.replace(/\*(.*?)\*/g, '<em>$1</em>');
+    text = text.replace(/\n/g, '<br>');
+    return text;
+}
+
+// Экранирование HTML
+function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+
+// Обработчик отправки
+document.getElementById('compareSendBtn').addEventListener('click', () => {
+    sendCompareMessage(textarea.value);
+});
+
+textarea.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        sendCompareMessage(textarea.value);
+    }
+});
+
+// Быстрое сравнение
+const checkboxes = document.querySelectorAll('.uni-checkbox input');
+const quickCompareBtn = document.getElementById('quickCompareBtn');
+
+checkboxes.forEach(checkbox => {
+    checkbox.addEventListener('change', () => {
+        const checkedCount = document.querySelectorAll('.uni-checkbox input:checked').length;
+        quickCompareBtn.disabled = checkedCount < 2;
+        quickCompareBtn.textContent = checkedCount >= 2 ? `Сравнить выбранные (${checkedCount})` : 'Выбери минимум 2';
+    });
+});
+
+quickCompareBtn.addEventListener('click', () => {
+    const selected = Array.from(document.querySelectorAll('.uni-checkbox input:checked'))
+        .map(cb => cb.dataset.name);
+    
+    if (selected.length >= 2) {
+        const message = `Сравни ${selected.join(', ')} по основным параметрам: стоимость, качество образования, перспективы трудоустройства, международные программы`;
+        sendCompareMessage(message);
+        
+        checkboxes.forEach(cb => cb.checked = false);
+        quickCompareBtn.disabled = true;
+        quickCompareBtn.textContent = 'Сравнить выбранные';
+    }
+});
+
+// Подсказки-вопросы
+document.querySelectorAll('.hint-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        const question = btn.dataset.question;
+        sendCompareMessage(question);
+    });
+});
+</script>
 {% endblock %}

@@ -16,6 +16,7 @@
     
     <!-- Page Specific Styles -->
     {% block styles %}{% endblock %}
+    {% block extra_css %}{% endblock %}
 </head>
 <body>
     <!-- Navigation -->
@@ -24,7 +25,7 @@
         <div class="nav-links">
             <a href="/">Главная</a>
             <a href="/universities/">Университеты</a>
-            <a href="/compare/">🤖 Сравнить</a>
+            <a href="{% url 'universities_comparison' %}">Сравнить</a>
             <a href="/test/">Тест</a>
             <a href="/test/" class="nav-btn">Пройти тест</a>
         </div>

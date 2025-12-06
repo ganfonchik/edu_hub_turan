@@ -26,6 +26,9 @@
     --bg-white: var(--color-white);
     --bg-olive: var(--color-olive);
     
+    /* Primary color alias */
+    --primary: var(--color-olive);
+    
     /* Text */
     --text-primary: var(--color-black);
     --text-secondary: var(--color-gray);
