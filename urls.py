@@ -13,9 +13,6 @@ urlpatterns = [
     path('compare/', TemplateView.as_view(template_name='compare.html'), name='compare'),
     path('admin/', admin.site.urls),
     path('ai-chat/', ai_brain.ai_chat, name='ai_chat'),
-<<<<<<< HEAD
     path('ai-compare/', ai_compare.ai_compare, name='ai_compare'),
-=======
     path('search-university/', ai_brain.search_university, name='search_university'),
->>>>>>> 199c39e9235ecb1db1c45cf1a94ec073e7fde0b6
 ]
